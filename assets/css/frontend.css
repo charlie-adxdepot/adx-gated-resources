@@ -1,0 +1,267 @@
+.adx-gr-trigger--loading {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.adx-gr-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.adx-gr-modal[hidden] {
+	display: none;
+}
+
+.adx-gr-modal__overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba( 0, 0, 0, 0.55 );
+}
+
+.adx-gr-modal__panel {
+	position: relative;
+	background: #fff;
+	border: 1px solid #ececec;
+	border-radius: 14px;
+	max-width: 520px;
+	width: calc(100% - 40px);
+	max-height: calc(100vh - 40px);
+	overflow-y: auto;
+	padding: 36px 32px;
+	box-shadow: 0 10px 40px rgba( 0, 0, 0, 0.2 );
+	box-sizing: border-box;
+}
+
+.adx-gr-modal__close {
+	position: absolute;
+	top: 14px;
+	right: 16px;
+	background: none;
+	border: none;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	color: #555;
+}
+
+.adx-gr-modal__heading {
+	margin: 0 0 8px;
+	font-size: 20px;
+}
+
+.adx-gr-modal__description {
+	margin: 0 0 24px;
+	color: #555;
+	font-size: 14px;
+}
+
+.adx-gr-modal__row {
+	display: flex;
+	gap: 16px;
+}
+
+.adx-gr-modal__row .adx-gr-modal__field {
+	flex: 1;
+	min-width: 0;
+}
+
+.adx-gr-modal__field {
+	margin-bottom: 20px;
+}
+
+.adx-gr-modal__label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #1a1a1a;
+}
+
+.adx-gr-modal__required {
+	color: #c0392b;
+}
+
+.adx-gr-modal__optional {
+	text-transform: none;
+	font-weight: 400;
+	color: #8a8a8a;
+	letter-spacing: normal;
+}
+
+.adx-gr-modal__checkbox-label {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	font-size: 13px;
+	color: #1a1a1a;
+}
+
+.adx-gr-modal__checkbox-label input[type="checkbox"] {
+	margin-top: 3px;
+}
+
+textarea.adx-gr-modal__input {
+	resize: vertical;
+}
+
+.adx-gr-modal__input,
+.adx-gr-modal__select {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 12px 14px;
+	background: #f6f6f7;
+	border: 1px solid #e4e4e6;
+	border-radius: 8px;
+	font-size: 14px;
+	font-family: inherit;
+	color: #1a1a1a;
+}
+
+.adx-gr-modal__select {
+	appearance: none;
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 14px center;
+	padding-right: 32px;
+}
+
+.adx-gr-modal__input:focus,
+.adx-gr-modal__select:focus {
+	outline: none;
+	border-color: #1a1a1a;
+	background-color: #fff;
+}
+
+.adx-gr-modal__input:disabled,
+.adx-gr-modal__select:disabled {
+	opacity: 0.6;
+}
+
+.adx-gr-modal__error {
+	color: #b32d2e;
+	font-size: 13px;
+	margin: -8px 0 16px;
+}
+
+.adx-gr-modal__submit {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+	padding: 14px;
+	border: none;
+	border-radius: 8px;
+	background: #1a1a1a;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	cursor: pointer;
+}
+
+.adx-gr-modal__submit:disabled {
+	opacity: 0.7;
+	cursor: default;
+}
+
+.adx-gr-modal__submit-arrow {
+	font-size: 16px;
+	line-height: 1;
+}
+
+.adx-gr-modal__note {
+	margin: 14px 0 0;
+	text-align: center;
+	font-size: 12px;
+	color: #8a8a8a;
+}
+
+body.adx-gr-modal-open {
+	overflow: hidden;
+}
+
+@media ( max-width: 480px ) {
+	.adx-gr-modal__row {
+		flex-direction: column;
+		gap: 0;
+	}
+}
+
+.adx-gr-gate-screen {
+	max-width: 640px;
+	margin: 15vh auto 0;
+	margin-bottom:100px;
+	padding: 0 24px;
+	text-align: center;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.adx-gr-gate-screen h1 {
+	font-size: 28px;
+	margin: 0 0 16px;
+}
+
+.adx-gr-gate-screen__teaser {
+	color: #555;
+	font-size: 15px;
+	line-height: 1.6;
+	margin: 0 0 28px;
+}
+
+.adx-gr-gate-screen .adx-gr-trigger {
+	display: inline-block;
+	padding: 14px 28px;
+	border: none;
+	border-radius: 8px;
+	background: #1a1a1a;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	cursor: pointer;
+}
+
+/* [adx_library_access] -- an outlined button with a download icon, white
+   text and outline (for the dark product-page banners); add theme classes
+   via class="..." to restyle, icon="no" to drop the icon. */
+.adx-gr-access-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 14px;
+	border: 2px solid #fff;
+	color: #fff !important;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.adx-gr-access-button:visited,
+.adx-gr-access-button:hover,
+.adx-gr-access-button:focus {
+	color: #fff !important;
+	opacity: 0.8;
+	text-decoration: none;
+}
+
+.adx-gr-access-button__icon {
+	display: inline-flex;
+	flex-shrink: 0;
+}
+
+.adx-gr-access-button__icon svg {
+	width: 16px;
+	height: 16px;
+}

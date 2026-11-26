@@ -1,0 +1,633 @@
+/*
+ * [adx_gated_library] -- the BIM library page.
+ * Everything is scoped under .adx-gr-lib, and headings, paragraphs and
+ * links are reset inside it, so theme styles (e.g. Enfold's) can't leak in.
+ */
+.adx-gr-lib {
+	--lib-white: #ffffff;
+	--lib-jungle: #18332f;
+	--lib-jungle-soft: #4b6862;
+	--lib-green: #49a942;
+	--lib-green-deep: #357a30;
+	--lib-green-tint: #e7f3e5;
+	--lib-hairline: rgba( 24, 51, 47, 0.14 );
+	--lib-hairline-soft: rgba( 24, 51, 47, 0.07 );
+	--lib-muted: rgba( 24, 51, 47, 0.55 );
+	--lib-tile-radius: 0 0 20px 0;
+	--lib-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+	--lib-text: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+	color: var( --lib-jungle );
+	font-family: var( --lib-text );
+	-webkit-font-smoothing: antialiased;
+}
+
+.adx-gr-lib *,
+.adx-gr-lib *::before,
+.adx-gr-lib *::after {
+	box-sizing: border-box;
+}
+
+/*
+ * Full width (layout="full"): break out of the theme's content column to
+ * the browser's edges, so the grid can fit as many columns as the screen
+ * allows. This CSS centres it on the column; library.js then lines it up
+ * exactly with the window, allowing for the scrollbar.
+ */
+.adx-gr-lib.adx-gr-lib--full {
+	position: relative;
+	box-sizing: border-box;
+	width: 100vw;
+	max-width: none;
+	margin-left: calc( 50% - 50vw );
+	margin-right: 0;
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+.adx-gr-lib h2,
+.adx-gr-lib h3,
+.adx-gr-lib p {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	text-transform: none;
+	letter-spacing: normal;
+}
+
+/* ---- parent category toggle ---- */
+.adx-gr-lib__parents {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 2px;
+	padding: 4px;
+	border-radius: 999px;
+	background: var( --lib-hairline-soft );
+}
+
+.adx-gr-lib .adx-gr-lib__parent {
+	margin: 0;
+	padding: 9px 18px;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+	color: var( --lib-jungle-soft );
+	font: 600 13px/1.2 var( --lib-text );
+	cursor: pointer;
+	box-shadow: none;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.adx-gr-lib .adx-gr-lib__parent.is-active {
+	background: var( --lib-jungle );
+	color: #fff;
+}
+
+/* ---- series chips ---- */
+.adx-gr-lib__series-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.adx-gr-lib__parents + .adx-gr-lib__series-nav {
+	margin-top: 16px;
+}
+
+.adx-gr-lib > .adx-gr-lib__series-nav:first-child {
+	margin-top: 0;
+}
+
+.adx-gr-lib .adx-gr-lib__chip {
+	margin: 0;
+	padding: 7px 14px;
+	border: 1.5px solid var( --lib-hairline );
+	border-radius: 999px;
+	background: #fff;
+	color: var( --lib-jungle-soft );
+	font: 500 12px/1.2 var( --lib-text );
+	cursor: pointer;
+	box-shadow: none;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.adx-gr-lib .adx-gr-lib__chip:hover {
+	border-color: var( --lib-green );
+}
+
+.adx-gr-lib .adx-gr-lib__chip.is-active {
+	background: var( --lib-green );
+	border-color: var( --lib-green );
+	color: #fff;
+}
+
+.adx-gr-lib .adx-gr-lib__chip[hidden] {
+	display: none;
+}
+
+/* ---- search ---- */
+.adx-gr-lib__search-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 22px;
+}
+
+.adx-gr-lib .adx-gr-lib__search {
+	flex: 1;
+	min-width: 0;
+	margin: 0;
+	padding: 11px 16px;
+	border: 1.5px solid var( --lib-hairline );
+	border-radius: 999px;
+	background: #fff;
+	color: var( --lib-jungle );
+	font: 400 13px/1.4 var( --lib-text );
+	box-shadow: none;
+}
+
+.adx-gr-lib .adx-gr-lib__search:focus {
+	outline: none;
+	border-color: var( --lib-green );
+}
+
+.adx-gr-lib .adx-gr-lib__search::placeholder {
+	color: var( --lib-muted );
+}
+
+/* Search box with a clear (×) button inside it on the right. */
+.adx-gr-lib__search-field {
+	position: relative;
+	display: block;
+	flex: 1;
+	min-width: 0;
+}
+
+.adx-gr-lib .adx-gr-lib__search-field .adx-gr-lib__search {
+	display: block;
+	width: 100%;
+	/* Themes style search boxes strongly (e.g. Enfold's #top input
+	   rules); keep room for the × and no stray margin either way. */
+	margin: 0 !important;
+	padding-right: 44px !important;
+}
+
+/* The browser's own small clear button would duplicate ours. */
+.adx-gr-lib .adx-gr-lib__search::-webkit-search-cancel-button,
+.adx-gr-lib .adx-gr-lib__search::-webkit-search-decoration {
+	-webkit-appearance: none;
+	appearance: none;
+	display: none;
+}
+
+.adx-gr-lib .adx-gr-lib__search-clear {
+	position: absolute;
+	top: 50%;
+	right: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: var( --lib-hairline-soft );
+	color: var( --lib-jungle-soft );
+	line-height: 1;
+	cursor: pointer;
+	box-shadow: none;
+	transform: translateY( -50% );
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.adx-gr-lib .adx-gr-lib__search-clear:hover,
+.adx-gr-lib .adx-gr-lib__search-clear:focus-visible {
+	background: var( --lib-jungle );
+	color: #fff;
+	outline: none;
+}
+
+.adx-gr-lib .adx-gr-lib__search-clear[hidden] {
+	display: none;
+}
+
+.adx-gr-lib__count {
+	font-size: 12px;
+	color: var( --lib-muted );
+	white-space: nowrap;
+}
+
+/* ---- grid ----
+ * Five columns that share the container width evenly (filling it edge
+ * to edge). Each column is a fifth of the width but never narrower
+ * than 200px, so on a smaller screen, when zoomed in or on a phone the
+ * grid steps down to 4, 3, 2 or 1 columns. --adx-gr-lib-columns sets
+ * the maximum if a theme or page wants a different number.
+ */
+.adx-gr-lib__grid {
+	--adx-gr-lib-columns: 5;
+	--adx-gr-lib-gap: 20px;
+
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fill,
+		minmax( max( 200px, calc( ( 100% - ( var( --adx-gr-lib-columns ) - 1 ) * var( --adx-gr-lib-gap ) ) / var( --adx-gr-lib-columns ) ) ), 1fr )
+	);
+	gap: var( --adx-gr-lib-gap );
+	margin-top: 30px;
+}
+
+.adx-gr-lib__card {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	border: 1.5px solid var( --lib-hairline );
+	border-radius: var( --lib-tile-radius );
+	background: #fff;
+	transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.adx-gr-lib__card:hover {
+	border-color: var( --lib-green );
+	transform: translateY( -2px );
+}
+
+.adx-gr-lib__card[hidden] {
+	display: none;
+}
+
+/* thumbnail */
+.adx-gr-lib__thumb {
+	position: relative;
+	flex-shrink: 0;
+	height: 180px;
+	background-color: var( --lib-green-tint );
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.adx-gr-lib__thumb--collage {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 2px;
+	background: #fff;
+}
+
+.adx-gr-lib__thumb--collage > span:not( .adx-gr-lib__badge ) {
+	background-position: center;
+	background-size: cover;
+	background-color: var( --lib-green-tint );
+}
+
+.adx-gr-lib__thumb-icon {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var( --lib-green-deep );
+	opacity: 0.6;
+}
+
+/* series badge: the main way to tell identical-looking families apart */
+.adx-gr-lib__badge {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 1;
+	padding: 6px 13px;
+	border-radius: 999px;
+	background: var( --lib-jungle );
+	color: #fff;
+	font: 800 13px/1 var( --lib-display );
+	letter-spacing: 0.06em;
+	box-shadow: 0 1px 0 rgba( 255, 255, 255, 0.25 ) inset;
+}
+
+.adx-gr-lib__card--bundle .adx-gr-lib__badge {
+	background: var( --lib-green );
+}
+
+/* body */
+.adx-gr-lib__body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	padding: 16px 14px;
+}
+
+.adx-gr-lib .adx-gr-lib__meta {
+	margin: 0 0 6px;
+	overflow: hidden;
+	color: var( --lib-muted );
+	font: 500 12px/1.4 var( --lib-text );
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.adx-gr-lib .adx-gr-lib__name {
+	margin: 0 0 14px;
+	color: var( --lib-jungle );
+	font: 700 15px/1.3 var( --lib-display );
+}
+
+.adx-gr-lib__prefix {
+	margin-right: 2px;
+	color: var( --lib-green-deep );
+}
+
+.adx-gr-lib .adx-gr-lib__note {
+	margin: 0 0 14px;
+	color: var( --lib-jungle-soft );
+	font: 400 12px/1.4 var( --lib-text );
+}
+
+/* download button (an .adx-gr-trigger link) */
+.adx-gr-lib a.adx-gr-lib__btn,
+.adx-gr-lib a.adx-gr-lib__btn:visited {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1px 4px;
+	width: 100%;
+	margin-top: auto;
+	padding: 11px 6px;
+	border: 0;
+	border-radius: 999px;
+	background: var( --lib-jungle );
+	color: #fff;
+	font: 600 13px/1.2 var( --lib-text );
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+
+.adx-gr-lib a.adx-gr-lib__btn:hover,
+.adx-gr-lib a.adx-gr-lib__btn:focus {
+	background: #0f231f;
+	color: #fff;
+	text-decoration: none;
+}
+
+.adx-gr-lib a.adx-gr-lib__btn--bundle,
+.adx-gr-lib a.adx-gr-lib__btn--bundle:visited {
+	background: var( --lib-green );
+}
+
+.adx-gr-lib a.adx-gr-lib__btn--bundle:hover,
+.adx-gr-lib a.adx-gr-lib__btn--bundle:focus {
+	background: var( --lib-green-deep );
+}
+
+.adx-gr-lib__btn svg {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+}
+
+/* "Download .zip" and the size each stay in one piece; on a narrow
+   card the size moves onto its own line rather than splitting words. */
+.adx-gr-lib__btn-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	white-space: nowrap;
+}
+
+.adx-gr-lib__size {
+	font-weight: 500;
+	white-space: nowrap;
+	opacity: 0.8;
+}
+
+.adx-gr-lib a.adx-gr-lib__btn.adx-gr-trigger--loading {
+	opacity: 1;
+	background: var( --lib-green-deep );
+}
+
+.adx-gr-lib a.adx-gr-lib__btn.adx-gr-trigger--loading svg {
+	animation: adx-gr-lib-pulse 1s ease-in-out infinite;
+}
+
+@keyframes adx-gr-lib-pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.4; }
+}
+
+/* "Download all" card */
+.adx-gr-lib__card--bundle {
+	border: 2px solid var( --lib-green );
+}
+
+/* series description card: also the divider that starts each series on a new row */
+.adx-gr-lib__card--desc {
+	grid-column-start: 1;
+	border-color: var( --lib-jungle );
+	border-top: 4px solid var( --lib-green );
+	background: var( --lib-jungle );
+}
+
+.adx-gr-lib__card--desc:hover {
+	border-color: var( --lib-jungle );
+	border-top-color: var( --lib-jungle );
+	transform: none;
+}
+
+/* the green top edge shows by default and disappears while hovering the
+   card; the border keeps its 4px so nothing shifts. The extra specificity
+   and !important keep a theme's own card styles from changing it. */
+.adx-gr-lib .adx-gr-lib__card.adx-gr-lib__card--desc {
+	border-top: 4px solid var( --lib-green ) !important;
+}
+
+.adx-gr-lib .adx-gr-lib__card.adx-gr-lib__card--desc:hover {
+	border-top: 4px solid var( --lib-jungle ) !important;
+}
+
+.adx-gr-lib__desc {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 22px 18px;
+}
+
+.adx-gr-lib .adx-gr-lib__desc-logo {
+	display: block;
+	align-self: flex-start;
+	width: auto;
+	max-width: 100%;
+	height: 38px;
+	margin: 0 0 20px 1px;
+	object-fit: contain;
+}
+
+.adx-gr-lib .adx-gr-lib__desc-title {
+	margin: 0 0 10px -2px;
+	color: #fff;
+	font: 800 26px/1.1 var( --lib-display );
+	letter-spacing: -0.01em;
+}
+
+.adx-gr-lib .adx-gr-lib__desc-sub {
+	margin: 0 0 16px;
+	color: var( --lib-green );
+	font: 600 15px/1.3 var( --lib-display );
+}
+
+.adx-gr-lib .adx-gr-lib__desc-text {
+	margin: 0;
+	color: rgba( 255, 255, 255, 0.75 );
+	font: 400 13px/1.6 var( --lib-text );
+}
+
+.adx-gr-lib__card--other .adx-gr-lib__desc-title {
+	font-size: 24px;
+}
+
+.adx-gr-lib .adx-gr-lib__empty {
+	margin: 30px 0 0;
+	color: var( --lib-muted );
+	font-size: 14px;
+}
+
+.adx-gr-lib .adx-gr-lib__empty[hidden] {
+	display: none;
+}
+
+@media ( max-width: 640px ) {
+	.adx-gr-lib.adx-gr-lib--full {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.adx-gr-lib__grid {
+		grid-template-columns: minmax( 0, 1fr );
+	}
+
+	.adx-gr-lib .adx-gr-lib__desc-title {
+		font-size: 28px;
+	}
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+	.adx-gr-lib__card,
+	.adx-gr-lib__card:hover {
+		transition: none;
+		transform: none;
+	}
+}
+
+/* ---- hero band at the top of the library (ADX Gated Resources > Library Hero) ---- */
+.adx-gr-lib .adx-gr-lib__hero {
+	margin: 0 0 28px;
+	padding: 52px 44px 44px;
+	border-radius: 14px;
+	background: var( --lib-jungle );
+	color: #fff;
+}
+
+.adx-gr-lib .adx-gr-lib__hero-title {
+	max-width: 620px;
+	margin: 0 0 14px;
+	color: #fff;
+	font: 700 42px/1.12 var( --lib-display );
+}
+
+.adx-gr-lib .adx-gr-lib__hero-intro {
+	max-width: 520px;
+	margin: 0 0 30px;
+	color: rgba( 255, 255, 255, 0.72 );
+	font: 400 16px/1.6 var( --lib-text );
+}
+
+.adx-gr-lib .adx-gr-lib__hero-stats {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 0 32px;
+}
+
+.adx-gr-lib .adx-gr-lib__hero-stat {
+	margin-right: 28px;
+	padding-right: 28px;
+	border-right: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.adx-gr-lib .adx-gr-lib__hero-stat:last-child {
+	margin-right: 0;
+	padding-right: 0;
+	border-right: 0;
+}
+
+.adx-gr-lib .adx-gr-lib__hero-num {
+	display: block;
+	color: #fff;
+	font: 700 24px/1.2 var( --lib-display );
+}
+
+.adx-gr-lib .adx-gr-lib__hero-label {
+	display: block;
+	margin-top: 2px;
+	color: rgba( 255, 255, 255, 0.6 );
+	font: 400 11px/1.4 var( --lib-text );
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+.adx-gr-lib a.adx-gr-lib__hero-btn,
+.adx-gr-lib a.adx-gr-lib__hero-btn:visited {
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 2px 8px;
+	padding: 13px 22px;
+	border: 0;
+	border-radius: 999px;
+	background: var( --lib-green );
+	color: #fff;
+	font: 600 14px/1.2 var( --lib-text );
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+
+.adx-gr-lib a.adx-gr-lib__hero-btn:hover,
+.adx-gr-lib a.adx-gr-lib__hero-btn:focus,
+.adx-gr-lib a.adx-gr-lib__hero-btn.adx-gr-trigger--loading {
+	background: var( --lib-green-deep );
+	color: #fff;
+	text-decoration: none;
+}
+
+.adx-gr-lib a.adx-gr-lib__hero-btn svg {
+	flex-shrink: 0;
+	width: 16px;
+	height: 16px;
+}
+
+@media ( max-width: 600px ) {
+	.adx-gr-lib .adx-gr-lib__hero {
+		padding: 36px 22px 30px;
+	}
+
+	.adx-gr-lib .adx-gr-lib__hero-title {
+		font-size: 32px;
+	}
+
+	/* the stats wrap onto several lines here, so no dividers between them */
+	.adx-gr-lib .adx-gr-lib__hero-stats {
+		gap: 16px 30px;
+	}
+
+	.adx-gr-lib .adx-gr-lib__hero-stat {
+		margin-right: 0;
+		padding-right: 0;
+		border-right: 0;
+	}
+}
