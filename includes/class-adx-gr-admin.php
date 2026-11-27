@@ -168,6 +168,8 @@ class ADX_GR_Admin {
 		register_setting( 'adx_gr_settings', 'adx_gr_cookie_days', array( 'sanitize_callback' => 'absint' ) );
 		register_setting( 'adx_gr_settings', 'adx_gr_modal_heading', array( 'sanitize_callback' => 'sanitize_text_field' ) );
 		register_setting( 'adx_gr_settings', 'adx_gr_modal_description', array( 'sanitize_callback' => 'sanitize_textarea_field' ) );
+		register_setting( 'adx_gr_settings', ADX_GR_Form_Fields::PRIVACY_URL_OPTION, array( 'sanitize_callback' => 'esc_url_raw' ) );
+		register_setting( 'adx_gr_settings', ADX_GR_Form_Fields::PRIVACY_TEXT_OPTION, array( 'sanitize_callback' => 'sanitize_text_field' ) );
 		register_setting( 'adx_gr_settings', 'adx_gr_notification_emails', array( 'sanitize_callback' => array( $this, 'sanitize_notification_emails' ) ) );
 		register_setting( 'adx_gr_settings', 'adx_gr_library_page_id', array( 'sanitize_callback' => 'absint' ) );
 		register_setting( 'adx_gr_settings', 'adx_gr_smtp_host', array( 'sanitize_callback' => 'sanitize_text_field' ) );
@@ -871,6 +873,20 @@ class ADX_GR_Admin {
 					<tr>
 						<th scope="row"><label for="adx_gr_modal_description"><?php esc_html_e( 'Form description', 'adx-gated-resources' ); ?></label></th>
 						<td><textarea id="adx_gr_modal_description" name="adx_gr_modal_description" class="large-text" rows="3"><?php echo esc_textarea( $modal_description ); ?></textarea></td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="adx_gr_privacy_url"><?php esc_html_e( 'Privacy Policy URL', 'adx-gated-resources' ); ?></label></th>
+						<td>
+							<input type="url" id="adx_gr_privacy_url" name="adx_gr_privacy_url" class="regular-text" value="<?php echo esc_attr( get_option( ADX_GR_Form_Fields::PRIVACY_URL_OPTION, '' ) ); ?>" placeholder="<?php echo esc_attr( function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '' ); ?>" />
+							<p class="description"><?php esc_html_e( 'Visitors must tick an agreement to this policy before the form is submitted. Leave blank to use the page set under Settings > Privacy.', 'adx-gated-resources' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="adx_gr_privacy_text"><?php esc_html_e( 'Agreement text', 'adx-gated-resources' ); ?></label></th>
+						<td>
+							<input type="text" id="adx_gr_privacy_text" name="adx_gr_privacy_text" class="large-text" value="<?php echo esc_attr( get_option( ADX_GR_Form_Fields::PRIVACY_TEXT_OPTION, '' ) ); ?>" placeholder="<?php echo esc_attr( ADX_GR_Form_Fields::default_privacy_text() ); ?>" />
+							<p class="description"><?php esc_html_e( 'The label beside the checkbox. {privacy_policy} becomes the link to your Privacy Policy.', 'adx-gated-resources' ); ?></p>
+						</td>
 					</tr>
 				</table>
 				<p class="description">
