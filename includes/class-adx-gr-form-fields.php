@@ -23,7 +23,57 @@ class ADX_GR_Form_Fields {
 	 * Param names already used by the AJAX endpoints; a custom field
 	 * can never take one of these keys.
 	 */
-	const RESERVED_KEYS = array( 'email', 'action', 'nonce', 'resource_id', 'page_id', 'page_url' );
+	const RESERVED_KEYS = array( 'email', 'action', 'nonce', 'resource_id', 'page_id', 'page_url', 'privacy_consent', 'privacy_consent_at' );
+
+	const PRIVACY_URL_OPTION  = 'adx_gr_privacy_url';
+	const PRIVACY_TEXT_OPTION = 'adx_gr_privacy_text';
+
+	/**
+	 * Placeholder in the agreement text that becomes the Privacy Policy link.
+	 */
+	const PRIVACY_LINK_TOKEN = '{privacy_policy}';
+
+	/**
+	 * Where the "Privacy Policy" link points: the address typed under
+	 * Settings, otherwise the page chosen as the site's privacy policy under
+	 * WordPress's Settings > Privacy. Empty if neither is set.
+	 */
+	public static function get_privacy_url() {
+		$url = trim( (string) get_option( self::PRIVACY_URL_OPTION, '' ) );
+
+		if ( '' === $url && function_exists( 'get_privacy_policy_url' ) ) {
+			$url = get_privacy_policy_url();
+		}
+
+		return esc_url_raw( $url );
+	}
+
+	public static function default_privacy_text() {
+		return __( 'I have read and agree to the {privacy_policy}.', 'adx-gated-resources' );
+	}
+
+	public static function get_privacy_text() {
+		$text = trim( (string) get_option( self::PRIVACY_TEXT_OPTION, '' ) );
+
+		return '' !== $text ? $text : self::default_privacy_text();
+	}
+
+	/**
+	 * The agreement sentence as safe HTML, with {privacy_policy} turned into
+	 * a link that opens in a new tab (so the visitor keeps their half-filled
+	 * form). With no policy address available the words stay plain text.
+	 */
+	public static function get_privacy_label_html() {
+		$text = esc_html( self::get_privacy_text() );
+		$name = esc_html__( 'Privacy Policy', 'adx-gated-resources' );
+		$url  = self::get_privacy_url();
+
+		$link = $url
+			? '<a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">' . $name . '</a>'
+			: $name;
+
+		return str_replace( self::PRIVACY_LINK_TOKEN, $link, $text );
+	}
 
 	/**
 	 * Returns the configured field list, seeding sensible defaults (and
@@ -189,6 +239,15 @@ class ADX_GR_Form_Fields {
 
 			$values[ $key ] = $value;
 		}
+
+		// The Privacy Policy agreement is not a configurable field: it's
+		// always required when contact details are captured. Stored with the
+		// details as the time it was given, so there's a record of it.
+		if ( empty( $_POST['privacy_consent'] ) || '1' !== sanitize_text_field( wp_unslash( $_POST['privacy_consent'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			wp_send_json_error( array( 'message' => __( 'Please agree to the Privacy Policy to continue.', 'adx-gated-resources' ) ) );
+		}
+
+		$values['privacy_consent_at'] = current_time( 'mysql' );
 
 		return $values;
 	}

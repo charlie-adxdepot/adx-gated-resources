@@ -4,7 +4,7 @@ Tags: lead generation, gated content, zerobounce, downloads
 Requires at least: 5.8
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.19.7
+Stable tag: 1.19.8
 License: GPLv2 or later
 
 Soft-gates selected downloads (e.g. the Revit library), file bundles, or
@@ -110,6 +110,16 @@ else on the site is unaffected. Logged-in users who can edit a gated
 page always see its real content.
 
 == Changelog ==
+
+= 1.19.8 =
+* The gate form now asks visitors to agree to your Privacy Policy before
+  their contact details are submitted. This covers every way into the BIM
+  library: the [adx_library_access] button, the locked library page and
+  gated downloads. The checkbox is required and checked on the server too,
+  and the time of agreement is saved with the visitor's details. Set the
+  link and the wording under **Settings > Privacy Policy URL / Agreement
+  text**; the URL defaults to the page chosen under WordPress's Settings >
+  Privacy. Visitors who are already remembered are not asked again.
 
 = 1.19.6 =
 * New option on a resource, "Keep this resource out of the library page":

@@ -13,6 +13,8 @@ delete_option( 'adx_gr_fail_open' );
 delete_option( 'adx_gr_cookie_days' );
 delete_option( 'adx_gr_modal_heading' );
 delete_option( 'adx_gr_modal_description' );
+delete_option( 'adx_gr_privacy_url' );
+delete_option( 'adx_gr_privacy_text' );
 delete_option( 'adx_gr_notification_emails' );
 delete_option( 'adx_gr_library_page_id' );
 delete_option( 'adx_gr_last_mail_error' );

@@ -897,6 +897,13 @@ class ADX_GR_Frontend {
 						<?php $this->render_field( $field ); ?>
 					<?php endforeach; ?>
 
+					<div class="adx-gr-modal__field adx-gr-modal__consent">
+						<label class="adx-gr-modal__checkbox-label">
+							<input type="checkbox" id="adx-gr-privacy-consent" name="privacy_consent" value="1" required />
+							<span><?php echo wp_kses( ADX_GR_Form_Fields::get_privacy_label_html(), array( 'a' => array( 'href' => array(), 'target' => array(), 'rel' => array() ) ) ); ?> <span class="adx-gr-modal__required">*</span></span>
+						</label>
+					</div>
+
 					<p class="adx-gr-modal__error" role="alert" hidden></p>
 
 					<button type="submit" class="adx-gr-modal__submit">

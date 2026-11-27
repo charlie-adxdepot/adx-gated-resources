@@ -106,6 +106,15 @@
 	margin-top: 3px;
 }
 
+.adx-gr-modal__consent .adx-gr-modal__checkbox-label {
+	line-height: 1.4;
+}
+
+.adx-gr-modal__consent a {
+	color: inherit;
+	text-decoration: underline;
+}
+
 textarea.adx-gr-modal__input {
 	resize: vertical;
 }

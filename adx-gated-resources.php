@@ -3,7 +3,7 @@
  * Plugin Name:       ADX Gated Resources
  * Plugin URI:        https://www.adxdepot.com.au
  * Description:       Soft-gates selected resource downloads (e.g. Revit library files) behind an email capture form, verified in real time via the ZeroBounce API, and logs leads for Sales follow-up.
- * Version:           1.19.7
+ * Version:           1.19.8
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            ADX Depot
@@ -13,7 +13,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'ADX_GR_VERSION', '1.19.7' );
+define( 'ADX_GR_VERSION', '1.19.8' );
 define( 'ADX_GR_FILE', __FILE__ );
 define( 'ADX_GR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ADX_GR_URL', plugin_dir_url( __FILE__ ) );
